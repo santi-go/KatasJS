@@ -17,13 +17,15 @@ var fizzBuzzMachine = {
 
   printResult: function(n){
     var number = n || 100;
+    var result = "";
     for(var i = 1; i < number + 1; i++){
-      var result = i;
-      if(this.isFizzBuzz(i)) result = this.FIZZBUZZ;
-      else if(this.isFizz(i)) result = this.FIZZ;
-      else if(this.isBuzz(i)) result = this.BUZZ;
-      console.log(result);
-      //arrar con results para retornar results[result]
+      current = i;
+      if(this.isFizzBuzz(i)) current = this.FIZZBUZZ;
+      else if(this.isFizz(i)) current = this.FIZZ;
+      else if(this.isBuzz(i)) current = this.BUZZ;
+      result += current +  " ";
+      console.log(current);
     }
-  },
+    return result;
+  }
 };
