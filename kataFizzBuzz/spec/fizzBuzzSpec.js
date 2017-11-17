@@ -20,7 +20,7 @@ describe("fizzBuzz", function() {
   });
 
   it("identifies multiples of both, 3 and 5 | 30 = true", function() {
-    expect(fizzBuzzMachine.isBuzz(30)).toEqual(true);
+    expect(fizzBuzzMachine.isFizzBuzz(30)).toEqual(true);
   });
 
   it("Prints the result in a single string", function() {
