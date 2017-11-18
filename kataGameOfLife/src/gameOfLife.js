@@ -16,7 +16,7 @@ Board.prototype.renderInitBoard = function() {
   for(var i = 0; i < this.rows; i++){
     var row = [];
     for(var j = 0; j < this.columns; j++){
-      cell = new Cell(liveOrDead())
+      cell = new Cell(liveOrDead());//////quedarse con el array de cell objects
       row.push(cell.renderCell(cell.isAlive()));
     }
     row = row.join("") + "\n";
