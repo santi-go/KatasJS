@@ -1,3 +1,7 @@
+const ALIVE = true;
+const DEAD = false;
+
+
 function Board (columns, rows) {
   this.columns = columns;
   this.rows = rows;
@@ -43,7 +47,7 @@ Cell.prototype.whereIam = function() {
 }
 
 Cell.prototype.renderCell = function(alive) {
-  if(alive === true) {
+  if(alive === ALIVE) {
     return "*";
   } else {
     return "-";
@@ -56,7 +60,7 @@ Cell.prototype.neighbourCounter = function(boardArray) {
     if(this.row === 0 && this.column === 0){
       for(var i = this.row; i <= this.row + 1; i++){
         for(var j = this.column; j <= this.column + 1; j++){
-          if(boardArray[i][j].isAlive() === true){
+          if(boardArray[i][j].isAlive() === ALIVE){
             count++;
           }
         }
@@ -66,7 +70,7 @@ Cell.prototype.neighbourCounter = function(boardArray) {
     if(this.row === 0 && this.column < boardArray[0].length - 1){
       for(var i = this.row; i <= this.row + 1; i++){
         for(var j = this.column - 1; j <= this.column + 1; j++){
-          if(boardArray[i][j].isAlive() === true){
+          if(boardArray[i][j].isAlive() === ALIVE){
             count++;
           }
         }
@@ -76,7 +80,7 @@ Cell.prototype.neighbourCounter = function(boardArray) {
     if(this.row === 0 && this.column === boardArray[0].length - 1){
       for(var i = this.row; i <= this.row + 1; i++){
         for(var j = this.column - 1; j <= this.column; j++){
-          if(boardArray[i][j].isAlive() === true){
+          if(boardArray[i][j].isAlive() === ALIVE){
             count++;
           }
         }
@@ -86,7 +90,7 @@ Cell.prototype.neighbourCounter = function(boardArray) {
     if(this.row > 0 && this.row < boardArray.length -1 && this.column === 0){
       for(var i = this.row - 1; i <= this.row + 1; i++){
         for(var j = this.column; j <= this.column + 1; j++){
-          if(boardArray[i][j].isAlive() === true){
+          if(boardArray[i][j].isAlive() === ALIVE){
             count++;
           }
         }
@@ -97,7 +101,7 @@ Cell.prototype.neighbourCounter = function(boardArray) {
       && this.column > 0 && this.column < boardArray.length - 1){
       for(var i = this.row - 1; i <= this.row + 1; i++){
         for(var j = this.column - 1; j <= this.column + 1; j++){
-          if(boardArray[i][j].isAlive() === true){
+          if(boardArray[i][j].isAlive() === ALIVE){
             count++;
           }
         }
@@ -107,7 +111,7 @@ Cell.prototype.neighbourCounter = function(boardArray) {
     if(this.row > 0 && this.row < boardArray.length -1 && this.column === boardArray[0].length - 1){
       for(var i = this.row - 1; i <= this.row + 1; i++){
         for(var j = this.column - 1; j <= this.column; j++){
-          if(boardArray[i][j].isAlive() === true){
+          if(boardArray[i][j].isAlive() === ALIVE){
             count++;
           }
         }
@@ -117,7 +121,7 @@ Cell.prototype.neighbourCounter = function(boardArray) {
     if(this.row === boardArray.length -1 && this.column === 0){
       for(var i = this.row - 1; i <= this.row; i++){
         for(var j = this.column; j <= this.column + 1; j++){
-          if(boardArray[i][j].isAlive() === true){
+          if(boardArray[i][j].isAlive() === ALIVE){
             count++;
           }
         }
@@ -128,7 +132,7 @@ Cell.prototype.neighbourCounter = function(boardArray) {
       && this.column < boardArray[0].length - 1){
       for(var i = this.row - 1; i <= this.row; i++){
         for(var j = this.column - 1; j <= this.column + 1; j++){
-          if(boardArray[i][j].isAlive() === true){
+          if(boardArray[i][j].isAlive() === ALIVE){
             count++;
           }
         }
@@ -138,7 +142,7 @@ Cell.prototype.neighbourCounter = function(boardArray) {
     if(this.row === boardArray.length -1 && this.column === boardArray[0].length - 1){
       for(var i = this.row - 1; i <= this.row; i++){
         for(var j = this.column - 1; j <= this.column; j++){
-          if(boardArray[i][j].isAlive() === true){
+          if(boardArray[i][j].isAlive() === ALIVE){
             count++;
           }
         }
@@ -149,9 +153,9 @@ Cell.prototype.neighbourCounter = function(boardArray) {
 
 function liveOrDead() {
   if(Math.random() > 0.5){
-    return true;
+    return ALIVE;
   } else {
-    return false;
+    return DEAD;
   }
 }
 
@@ -166,4 +170,19 @@ function convertObjToStr(boardArray){
     boardStringArray.push(row);
   }
   return boardStringArray;
+}
+
+function checkRules(isAlive, neighbourCount) {
+  if(isAlive === ALIVE && neighbourCount < 2) {
+    return DEAD;
+  }
+  if(isAlive === ALIVE && neighbourCount > 3) {
+    return DEAD;
+  }
+  if(isAlive === ALIVE && neighbourCount === 2 || neighbourCount === 3){
+    return ALIVE;
+  }
+  if(isAlive === DEAD && neighbourCount === 3) {
+    return ALIVE;
+  }
 }

@@ -32,6 +32,22 @@ describe("gameOfLife", function() {
 
   it("counts the number of alive neighbours",function(){
     board.renderBoard(convertObjToStr(boardArray))
-    expect(boardArray[2][2].neighbourCounter(boardArray)).toEqual(8);
+    expect(boardArray[1][1].neighbourCounter(boardArray)).toEqual();
+  });
+
+  it("checks the first game rule",function(){
+    expect(checkRules(ALIVE, 0)).toEqual(DEAD);
+  });
+
+  it("checks the second game rule",function(){
+    expect(checkRules(ALIVE, 4)).toEqual(DEAD);
+  });
+
+  it("checks the third game rule",function(){
+    expect(checkRules(ALIVE, 2)).toEqual(ALIVE);
+  });
+
+  it("checks the fourth game rule",function(){
+    expect(checkRules(DEAD, 3)).toEqual(ALIVE);
   });
 })
