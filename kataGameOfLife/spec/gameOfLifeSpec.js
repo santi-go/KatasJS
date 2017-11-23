@@ -1,6 +1,6 @@
 describe("gameOfLife", function() {
   var board = new Board(3,3);
-  var boardArray = board.createBoardArray()
+  //var boardArray = board.createBoardArray();
 
   beforeEach(function(){
 
@@ -12,12 +12,12 @@ describe("gameOfLife", function() {
 
   it("renders a board in a form of a string",function(){
     expect(typeof board
-      .renderBoard(convertObjToStr(boardArray)))
+      .renderBoard(convertObjToStr(board.boardArray)))
       .toEqual("string");
   });
 
   it("creates a board array with random cells objects",function(){
-    expect(typeof board.createBoardArray()).toEqual("object");
+    expect(typeof board.boardArray).toEqual("object");
   });
 
   it("creates a cell object with its ubication within the board",function(){
@@ -27,7 +27,7 @@ describe("gameOfLife", function() {
 
   it("convert alive cells object into strings",function(){
     var board = new Board(3,3);
-    expect(typeof convertObjToStr(board.createBoardArray())).toEqual("object");
+    expect(typeof convertObjToStr(board.boardArray)).toEqual("object");
   });
 
   it("counts the number of alive neighbours",function(){

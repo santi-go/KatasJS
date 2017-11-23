@@ -5,9 +5,10 @@ const DEAD = false;
 function Board (columns, rows) {
   this.columns = columns;
   this.rows = rows;
+  this.boardArray = this.createInitBoardArray();
 }
 
-Board.prototype.createBoardArray = function() {
+Board.prototype.createInitBoardArray = function() {
   var boardArray = [];
   for(var i = 0; i < this.rows; i++){
     var row = [];
@@ -18,6 +19,10 @@ Board.prototype.createBoardArray = function() {
     boardArray.push(row);
   }
   return boardArray;
+};
+
+Board.prototype.updateBoardArray = function() {
+
 };
 
 Board.prototype.renderBoard = function(boardArray) {
