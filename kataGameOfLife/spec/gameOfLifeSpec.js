@@ -11,9 +11,7 @@ describe("gameOfLife", function() {
   });
 
   it("renders a board in a form of a string",function(){
-    expect(typeof board
-      .renderBoard(convertObjToStr(board.boardArray)))
-      .toEqual("string");
+    expect(typeof board.renderBoard()).toEqual("string");
   });
 
   it("creates a board array with random cells objects",function(){
@@ -24,17 +22,17 @@ describe("gameOfLife", function() {
     var cell = new Cell(true, 3, 5);
     expect(cell.whereIam()).toEqual([3, 5]);
   });
-
+/*
   it("convert alive cells object into strings",function(){
     var board = new Board(3,3);
     expect(typeof convertObjToStr(board.boardArray)).toEqual("object");
-  });
-
+  });*/
+/*
   it("counts the number of alive neighbours",function(){
-    board.renderBoard(convertObjToStr(boardArray))
+    board.renderBoard();
     expect(boardArray[1][1].neighbourCounter(boardArray)).toEqual();
   });
-
+*/
   it("checks the first game rule",function(){
     expect(checkRules(ALIVE, 0)).toEqual(DEAD);
   });

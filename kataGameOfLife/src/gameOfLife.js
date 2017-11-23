@@ -25,10 +25,11 @@ Board.prototype.updateBoardArray = function() {
 
 };
 
-Board.prototype.renderBoard = function(boardArray) {
+Board.prototype.renderBoard = function() {
+  var boardArrayString = convertObjToStr(this.boardArray)
   var boardString = "";
-  for(var i = 0; i < boardArray.length; i++){
-    var rowString = boardArray[i].join("") + "\n";
+  for(var i = 0; i < boardArrayString.length; i++){
+    var rowString = boardArrayString[i].join("") + "\n";
     boardString += rowString;
   }
   console.log(boardString)
