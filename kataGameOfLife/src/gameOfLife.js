@@ -191,3 +191,11 @@ function checkRules(isAlive, neighbourCount) {
     return ALIVE;
   }
 }
+/*
+function startGame(rows, columns, frecuency) {
+  var board = new Board(rows, columns);
+  window.setInterval(board.renderBoard(), frecuency);
+}
+
+startGame(9,9,500);
+*/
