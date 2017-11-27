@@ -10,8 +10,8 @@ describe("gameOfLife", function() {
     expect(board.columns).toEqual(3);
   });
 
-  it("renders a board in a form of a string",function(){
-    expect(typeof board.renderBoard()).toEqual("string");
+  it("has a board in a form of an Array, when created new board",function(){
+    expect(typeof board.boardArray).toEqual("object");
   });
 
   it("creates a board array with random cells objects",function(){
@@ -22,17 +22,16 @@ describe("gameOfLife", function() {
     var cell = new Cell(true, 3, 5);
     expect(cell.whereIam()).toEqual([3, 5]);
   });
-/*
-  it("convert alive cells object into strings",function(){
-    var board = new Board(3,3);
-    expect(typeof convertObjToStr(board.boardArray)).toEqual("object");
-  });*/
-/*
-  it("counts the number of alive neighbours",function(){
-    board.renderBoard();
-    expect(boardArray[1][1].neighbourCounter(boardArray)).toEqual();
+
+  it("renders the board",function(){
+    expect(board.renderBoard()).toEqual("object");
   });
-*/
+
+  it("counts the number of alive neighbours",function(){
+
+    expect(board.boardArray[0][2].neighbourCounter(board.boardArray)).toEqual();
+  });
+
   it("checks the first game rule",function(){
     expect(checkRules(ALIVE, 0)).toEqual(DEAD);
   });

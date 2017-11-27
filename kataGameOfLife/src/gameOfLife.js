@@ -22,7 +22,25 @@ Board.prototype.createInitBoardArray = function() {
 };
 
 Board.prototype.updateBoardArray = function() {
-
+  var updatedBoardArray = [];
+  var count = 0;
+  for(var i = 0; i < this.rows; i++){
+    var row = [];
+    for(var j = 0; j < this.columns; j++){
+      count++;
+      var cell = this.boardArray[i][j];
+      console.log("current cell : ",cell);
+      var neighbourCount = cell.neighbourCounter(this.boardArray);
+      console.log(neighbourCount);
+      var isAlive = cell.isAlive();
+      console.log("current cell isAlive: ", isAlive);
+      var newCell = new Cell(checkRules(isAlive, neighbourCount), i, j);//checkRules a veces da error revisar
+      console.log("new cell "+"#"+count+" : ", newCell, "\n ---------------------------------");
+      // row.push(newcell);
+    }
+    //updatedBoardArray.push(row);
+  }
+  //this.boardArray = updatedBoardArray; //copy array
 };
 
 Board.prototype.renderBoard = function() {
@@ -33,7 +51,9 @@ Board.prototype.renderBoard = function() {
     boardString += rowString;
   }
   console.log(boardString)
-  return boardString;
+  this.updateBoardArray();
+  //console.log(boardString)
+  //return boardString;
 };
 
 
@@ -61,94 +81,117 @@ Cell.prototype.renderCell = function(alive) {
 }
 
 Cell.prototype.neighbourCounter = function(boardArray) {
+    const ROW = this.row;
+    const COL = this.column;
+    const WIDTH = boardArray[0].length;
+    const HEIGHT = boardArray.length;
+
     var count = 0;
 
-    if(this.row === 0 && this.column === 0){
-      for(var i = this.row; i <= this.row + 1; i++){
-        for(var j = this.column; j <= this.column + 1; j++){
+    console.log("current cell coor: ", ROW, COL);
+
+
+    if(ROW === 0 && COL === 0){///ESTE LOOP si sirve
+      // console.log("CASE 1");
+      for(var i = ROW; i <= ROW + 1 ; i++){
+        for(var j = COL; j <= COL + 1; j++){
           if(boardArray[i][j].isAlive() === ALIVE){
+            // console.log("CASE 1 alive");
+            count++;
+          }
+        }
+      }
+    }
+    else if(ROW === 0 && COL > 0 && COL < WIDTH - 1){
+      // console.log("CASE 2");
+      for(var i = ROW; i <= ROW + 1; i++){
+        for(var j = COL - 1; j <= COL + 1; j++){
+          if(boardArray[i][j].isAlive() === ALIVE){
+            // console.log("CASE 2 alive");
             count++;
           }
         }
       }
     }
 
-    if(this.row === 0 && this.column < boardArray[0].length - 1){
-      for(var i = this.row; i <= this.row + 1; i++){
-        for(var j = this.column - 1; j <= this.column + 1; j++){
+    else if(ROW === 0 && COL === WIDTH - 1){
+      // console.log("CASE 3");
+      for(var i = ROW; i <= ROW + 1; i++){
+        for(var j = COL - 1; j <= COL; j++){
           if(boardArray[i][j].isAlive() === ALIVE){
+            // console.log("CASE 3 alive");
+            count++;
+          }
+        }
+      }
+    }
+//---------------------------------------------------------------------
+    else if(ROW > 0 && ROW < HEIGHT -1 && COL === 0){
+      // console.log("CASE 4");
+      for(var i = ROW - 1; i <= ROW + 1; i++){
+        for(var j = COL; j <= COL + 1; j++){
+          if(boardArray[i][j].isAlive() === ALIVE){
+            // console.log("CASE 4 alive");
             count++;
           }
         }
       }
     }
 
-    if(this.row === 0 && this.column === boardArray[0].length - 1){
-      for(var i = this.row; i <= this.row + 1; i++){
-        for(var j = this.column - 1; j <= this.column; j++){
+    else if(ROW > 0 && ROW < WIDTH - 1 && COL > 0 && COL < HEIGHT - 1){
+        // console.log("CASE 5");
+      for(var i = ROW - 1; i <= ROW + 1; i++){
+        for(var j = COL - 1; j <= COL + 1; j++){
           if(boardArray[i][j].isAlive() === ALIVE){
+            // console.log("CASE 5 alive");
             count++;
           }
         }
       }
     }
 
-    if(this.row > 0 && this.row < boardArray.length -1 && this.column === 0){
-      for(var i = this.row - 1; i <= this.row + 1; i++){
-        for(var j = this.column; j <= this.column + 1; j++){
+    else if(ROW > 0 && ROW < HEIGHT -1 && COL === WIDTH - 1){
+      // console.log("CASE 6");
+      for(var i = ROW - 1; i <= ROW + 1; i++){
+        for(var j = COL - 1; j <= COL; j++){
           if(boardArray[i][j].isAlive() === ALIVE){
+            // console.log("CASE 6 alive");
             count++;
           }
         }
       }
     }
 
-    if(this.row > 0 && this.row < boardArray[0].length - 1
-      && this.column > 0 && this.column < boardArray.length - 1){
-      for(var i = this.row - 1; i <= this.row + 1; i++){
-        for(var j = this.column - 1; j <= this.column + 1; j++){
+    else if(ROW === HEIGHT -1 && COL === 0){
+      // console.log("CASE 7");
+      for(var i = ROW - 1; i <= ROW; i++){
+        for(var j = COL; j <= COL + 1; j++){
           if(boardArray[i][j].isAlive() === ALIVE){
+            // console.log("CASE 7 alive");
             count++;
           }
         }
       }
     }
 
-    if(this.row > 0 && this.row < boardArray.length -1 && this.column === boardArray[0].length - 1){
-      for(var i = this.row - 1; i <= this.row + 1; i++){
-        for(var j = this.column - 1; j <= this.column; j++){
+    else if(ROW === HEIGHT - 1 && COL > 0 && COL < WIDTH - 1){
+      // console.log("CASE 8");
+      for(var i = ROW - 1; i <= ROW; i++){
+        for(var j = COL - 1; j <= COL + 1; j++){
           if(boardArray[i][j].isAlive() === ALIVE){
+            // console.log("CASE 8 alive");
             count++;
           }
         }
       }
     }
 
-    if(this.row === boardArray.length -1 && this.column === 0){
-      for(var i = this.row - 1; i <= this.row; i++){
-        for(var j = this.column; j <= this.column + 1; j++){
+    else if(ROW === HEIGHT -1 && COL === WIDTH - 1){
+      // console.log("CASE 9");
+      for(var i = ROW - 1; i <= ROW; i++){
+        for(var j = COL - 1; j <= COL; j++){
           if(boardArray[i][j].isAlive() === ALIVE){
-            count++;
-          }
-        }
-      }
-    }
-
-    if(this.row === boardArray.length -1 && this.column > 0
-      && this.column < boardArray[0].length - 1){
-      for(var i = this.row - 1; i <= this.row; i++){
-        for(var j = this.column - 1; j <= this.column + 1; j++){
-          if(boardArray[i][j].isAlive() === ALIVE){
-            count++;
-          }
-        }
-      }
-    }
-
-    if(this.row === boardArray.length -1 && this.column === boardArray[0].length - 1){
-      for(var i = this.row - 1; i <= this.row; i++){
-        for(var j = this.column - 1; j <= this.column; j++){
-          if(boardArray[i][j].isAlive() === ALIVE){
+            // console.log("CASE 9 alive");
             count++;
           }
         }
