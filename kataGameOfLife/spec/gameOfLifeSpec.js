@@ -1,6 +1,5 @@
 describe("gameOfLife", function() {
   var board = new Board(3,3);
-  //var boardArray = board.createBoardArray();
 
   beforeEach(function(){
 
@@ -24,12 +23,7 @@ describe("gameOfLife", function() {
   });
 
   it("renders the board",function(){
-    expect(board.renderBoard()).toEqual("object");
-  });
-
-  it("counts the number of alive neighbours",function(){
-
-    expect(board.boardArray[0][2].neighbourCounter(board.boardArray)).toEqual();
+    expect(typeof board.renderBoard()).toEqual("string");
   });
 
   it("checks the first game rule",function(){

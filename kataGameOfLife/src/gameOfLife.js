@@ -29,19 +29,15 @@ Board.prototype.updateBoardArray = function() {
     for(var j = 0; j < this.columns; j++){
       count++;
       var cell = this.boardArray[i][j];
-      console.log("current cell : ",cell);
       var neighbourCount = cell.neighbourCounter(this.boardArray);
-      console.log(neighbourCount);
       var isAlive = cell.isAlive();
-      console.log("current cell isAlive: ", isAlive);
-      var newCell = new Cell(checkRules(isAlive, neighbourCount), i, j);//checkRules a veces da error revisar
-      console.log("new cell "+"#"+count+" : ", newCell, "\n ---------------------------------");
-      // row.push(newcell);
+      var newCell = new Cell(checkRules(isAlive, neighbourCount), i, j);
+      row.push(newCell)
     }
-    //updatedBoardArray.push(row);
+    updatedBoardArray.push(row);
   }
-  //this.boardArray = updatedBoardArray; //copy array
-};
+  this.boardArray = updatedBoardArray;
+  };
 
 Board.prototype.renderBoard = function() {
   var boardArrayString = convertObjToStr(this.boardArray)
@@ -52,8 +48,7 @@ Board.prototype.renderBoard = function() {
   }
   console.log(boardString)
   this.updateBoardArray();
-  //console.log(boardString)
-  //return boardString;
+  return boardString;
 };
 
 
@@ -79,7 +74,7 @@ Cell.prototype.renderCell = function(alive) {
     return "-";
   }
 }
-
+// REFACTOR!!!!
 Cell.prototype.neighbourCounter = function(boardArray) {
     const ROW = this.row;
     const COL = this.column;
@@ -88,10 +83,7 @@ Cell.prototype.neighbourCounter = function(boardArray) {
 
     var count = 0;
 
-    console.log("current cell coor: ", ROW, COL);
-
-
-    if(ROW === 0 && COL === 0){///ESTE LOOP si sirve
+    if(ROW === 0 && COL === 0){
       // console.log("CASE 1");
       for(var i = ROW; i <= ROW + 1 ; i++){
         for(var j = COL; j <= COL + 1; j++){
@@ -125,7 +117,7 @@ Cell.prototype.neighbourCounter = function(boardArray) {
         }
       }
     }
-//---------------------------------------------------------------------
+
     else if(ROW > 0 && ROW < HEIGHT -1 && COL === 0){
       // console.log("CASE 4");
       for(var i = ROW - 1; i <= ROW + 1; i++){
@@ -222,10 +214,7 @@ function convertObjToStr(boardArray){
 }
 
 function checkRules(isAlive, neighbourCount) {
-  if(isAlive === ALIVE && neighbourCount < 2) {
-    return DEAD;
-  }
-  if(isAlive === ALIVE && neighbourCount > 3) {
+  if(isAlive === ALIVE && neighbourCount < 2 || neighbourCount > 3) {
     return DEAD;
   }
   if(isAlive === ALIVE && neighbourCount === 2 || neighbourCount === 3){
@@ -234,12 +223,16 @@ function checkRules(isAlive, neighbourCount) {
   if(isAlive === DEAD && neighbourCount === 3) {
     return ALIVE;
   }
-}
-/*
-function startGame(rows, columns, frecuency) {
-  var board = new Board(rows, columns);
-  window.setInterval(board.renderBoard(), frecuency);
+
+  if(isAlive === DEAD && neighbourCount < 3 || neighbourCount > 3) {
+    return DEAD;
+  }
 }
 
-startGame(9,9,500);
-*/
+function startGame(rows, columns, frecuency) {
+  var board = new Board(rows, columns);
+  window.setInterval(function(){board.renderBoard()}, frecuency);
+
+}
+
+//startGame(50,50,1000);
